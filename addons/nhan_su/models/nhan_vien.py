@@ -19,6 +19,9 @@ class NhanVien(models.Model):
     que_quan = fields.Char("Quê quán")
     email = fields.Char("Email")
     so_dien_thoai = fields.Char("Số điện thoại")
+    luong_co_ban = fields.Float(
+    string='Lương cơ bản',
+    help='Lương cơ bản theo tháng')
     lich_su_cong_tac_ids = fields.One2many(
         "lich_su_cong_tac", 
         inverse_name="nhan_vien_id", 
@@ -105,4 +108,44 @@ class NhanVien(models.Model):
                 lambda x: x.trang_thai == 'dang_hieu_luc'
             )
             record.hop_dong_hien_tai_id = hop_dong[0] if hop_dong else False
+
+
+    cham_cong_ids = fields.One2many(
+        'cham_cong',
+        inverse_name='nhan_vien_id',
+        string='Lịch sử chấm công'
+    )
+
+    luong_ids = fields.One2many(
+        'luong',
+        inverse_name='nhan_vien_id',
+        string='Lịch sử luong'
+    )
+    
+    so_ngay_lam_thang_nay = fields.Integer(
+        "Số ngày làm tháng này",
+        compute='_compute_thong_ke_cham_cong'
+    )
+    
+    so_lan_tre_thang_nay = fields.Integer(
+        "Số lần trễ tháng này",
+        compute='_compute_thong_ke_cham_cong'
+    )
+
+    @api.depends('cham_cong_ids', 'cham_cong_ids.ngay_cham_cong', 'cham_cong_ids.trang_thai')
+    def _compute_thong_ke_cham_cong(self):
+        for record in self:
+            today = fields.Date.today()
+            start_of_month = today.replace(day=1)
+        cham_cong_thang_nay = record.cham_cong_ids.filtered(
+            lambda x: x.ngay_cham_cong and start_of_month <= x.ngay_cham_cong <= today
+        )
+
+        record.so_ngay_lam_thang_nay = len(cham_cong_thang_nay.filtered(
+            lambda x: x.trang_thai in ['di_lam', 'di_muon', 've_som']
+        ))
+
+        record.so_lan_tre_thang_nay = len(cham_cong_thang_nay.filtered(
+            lambda x: x.trang_thai == 'di_muon'
+        ))
 

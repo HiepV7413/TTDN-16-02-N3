@@ -33,6 +33,8 @@
         'views/danh_sach_chung_chi_bang_cap.xml',
         'views/hop_dong.xml',
         'views/danh_sach_hop_dong.xml',
+        'views/cham_cong.xml',
+        'views/luong.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode
