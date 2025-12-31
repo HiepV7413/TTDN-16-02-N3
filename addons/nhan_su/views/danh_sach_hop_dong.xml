@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_danh_sach_hop_dong_tree" model="ir.ui.view">
+        <field name="name">danh_sach_hop_dong.tree</field>
+        <field name="model">danh_sach_hop_dong</field>
+        <field name="arch" type="xml">
+            <tree string="Danh sách hợp đồng" decoration-success="trang_thai=='dang_hieu_luc'" 
+                  decoration-muted="trang_thai in ['het_han','da_huy']" 
+                  decoration-info="trang_thai=='du_thao'">
+                <field name="so_hop_dong"/>
+                <field name="nhan_vien_id"/>
+                <field name="hop_dong_id"/>
+                <field name="ngay_bat_dau"/>
+                <field name="ngay_ket_thuc"/>
+                <field name="thoi_han" string="Thời hạn (tháng)"/>
+                <field name="tong_luong" widget="monetary"/>
+                <field name="trang_thai" widget="badge" 
+                       decoration-success="trang_thai == 'dang_hieu_luc'"
+                       decoration-info="trang_thai == 'du_thao'"
+                       decoration-danger="trang_thai == 'da_huy'"
+                       decoration-muted="trang_thai == 'het_han'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_danh_sach_hop_dong_form" model="ir.ui.view">
+        <field name="name">danh_sach_hop_dong.form</field>
+        <field name="model">danh_sach_hop_dong</field>
+        <field name="arch" type="xml">
+            <form string="Hợp đồng lao động">
+                <header>
+                        <field name="trang_thai" widget="statusbar" 
+                           statusbar_visible="du_thao,dang_hieu_luc,het_han"/>
+                        <button name="action_set_dang_hieu_luc" type="object" string="Kích hoạt" class="btn-primary"
+                            attrs="{'invisible': [('trang_thai','!=','du_thao')]}"/>
+                        <button name="action_set_het_han" type="object" string="Đánh hết hạn"
+                            attrs="{'invisible': [('trang_thai','!=','dang_hieu_luc')]}"/>
+                        <button name="action_set_da_huy" type="object" string="Hủy"
+                            attrs="{'invisible': [('trang_thai','=','da_huy')]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="so_hop_dong" placeholder="Số hợp đồng..."/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group string="Thông tin nhân viên">
+                            <field name="nhan_vien_id" options="{'no_create': True}"/>
+                            <field name="ma_dinh_danh" readonly="1"/>
+                            <field name="ho_va_ten" readonly="1"/>
+                        </group>
+                        <group string="Thông tin hợp đồng">
+                            <field name="hop_dong_id" options="{'no_create': True}"/>
+                            <field name="ngay_ky"/>
+                            <field name="thoi_han" readonly="1"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <group string="Thời gian hiệu lực">
+                            <field name="ngay_bat_dau"/>
+                            <field name="ngay_ket_thuc"/>
+                        </group>
+                        <group string="Thông tin lương">
+                            <field name="luong_co_ban" widget="monetary"/>
+                            <field name="phu_cap" widget="monetary"/>
+                            <field name="tong_luong" widget="monetary" readonly="1" 
+                                   class="oe_subtotal_footer_separator"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Ghi chú">
+                            <field name="ghi_chu" placeholder="Ghi chú về hợp đồng..."/>
+                        </page>
+                        <page string="File đính kèm">
+                            <group>
+                                <field name="file_hop_dong" filename="file_name"/>
+                                <field name="file_name" invisible="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_danh_sach_hop_dong_kanban" model="ir.ui.view">
+        <field name="name">danh_sach_hop_dong.kanban</field>
+        <field name="model">danh_sach_hop_dong</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="so_hop_dong"/>
+                <field name="nhan_vien_id"/>
+                <field name="hop_dong_id"/>
+                <field name="ngay_bat_dau"/>
+                <field name="ngay_ket_thuc"/>
+                <field name="trang_thai"/>
+                <field name="tong_luong"/>
+                
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-8">
+                                    <strong><field name="so_hop_dong"/></strong>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <span class="badge" t-attf-class="badge-#{record.trang_thai.raw_value == 'dang_hieu_luc' ? 'success' : record.trang_thai.raw_value == 'du_thao' ? 'info' : 'secondary'}">
+                                        <field name="trang_thai"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <i class="fa fa-user"/> <field name="nhan_vien_id"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <i class="fa fa-file-text-o"/> <field name="hop_dong_id"/>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <i class="fa fa-calendar"/> <field name="ngay_bat_dau"/>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <i class="fa fa-money"/> <field name="tong_luong" widget="monetary"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_danh_sach_hop_dong_search" model="ir.ui.view">
+        <field name="name">danh_sach_hop_dong.search</field>
+        <field name="model">danh_sach_hop_dong</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm hợp đồng">
+                <field name="so_hop_dong"/>
+                <field name="nhan_vien_id"/>
+                <field name="hop_dong_id"/>
+                <field name="ma_dinh_danh"/>
+                <field name="ho_va_ten"/>
+                
+                <filter string="Dự thảo" name="du_thao" domain="[('trang_thai','=','du_thao')]"/>
+                <filter string="Đang hiệu lực" name="dang_hieu_luc" domain="[('trang_thai','=','dang_hieu_luc')]"/>
+                <filter string="Hết hạn" name="het_han" domain="[('trang_thai','=','het_han')]"/>
+                
+                <separator/>
+                <filter string="Hợp đồng tháng này" name="thang_nay" 
+                        domain="[('ngay_bat_dau','&gt;=', (context_today() - relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                 ('ngay_bat_dau','&lt;=', (context_today() + relativedelta(day=31)).strftime('%Y-%m-%d'))]"/>
+                <filter string="Sắp hết hạn (30 ngày)" name="sap_het_han" 
+                        domain="[('ngay_ket_thuc','&gt;=', context_today().strftime('%Y-%m-%d')),
+                                 ('ngay_ket_thuc','&lt;=', (context_today() + relativedelta(days=30)).strftime('%Y-%m-%d')),
+                                 ('trang_thai','=','dang_hieu_luc')]"/>
+                
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Nhân viên" name="group_nhan_vien" context="{'group_by':'nhan_vien_id'}"/>
+                    <filter string="Loại hợp đồng" name="group_hop_dong" context="{'group_by':'hop_dong_id'}"/>
+                    <filter string="Trạng thái" name="group_trang_thai" context="{'group_by':'trang_thai'}"/>
+                    <filter string="Tháng bắt đầu" name="group_thang_bat_dau" context="{'group_by':'ngay_bat_dau:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_danh_sach_hop_dong_calendar" model="ir.ui.view">
+        <field name="name">danh_sach_hop_dong.calendar</field>
+        <field name="model">danh_sach_hop_dong</field>
+        <field name="arch" type="xml">
+            <calendar string="Lịch hợp đồng" 
+                      date_start="ngay_bat_dau" 
+                      date_stop="ngay_ket_thuc" 
+                      color="trang_thai" 
+                      mode="month">
+                <field name="nhan_vien_id"/>
+                <field name="so_hop_dong"/>
+                <field name="hop_dong_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_danh_sach_hop_dong_pivot" model="ir.ui.view">
+        <field name="name">danh_sach_hop_dong.pivot</field>
+        <field name="model">danh_sach_hop_dong</field>
+        <field name="arch" type="xml">
+            <pivot string="Phân tích hợp đồng">
+                <field name="hop_dong_id" type="row"/>
+                <field name="trang_thai" type="col"/>
+                <field name="tong_luong" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_danh_sach_hop_dong_graph" model="ir.ui.view">
+        <field name="name">danh_sach_hop_dong.graph</field>
+        <field name="model">danh_sach_hop_dong</field>
+        <field name="arch" type="xml">
+            <graph string="Biểu đồ hợp đồng" type="bar">
+                <field name="hop_dong_id"/>
+                <field name="tong_luong" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_danh_sach_hop_dong" model="ir.actions.act_window">
+        <field name="name">Hợp đồng lao động</field>
+        <field name="res_model">danh_sach_hop_dong</field>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+        <field name="context">{'search_default_dang_hieu_luc': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo hợp đồng lao động mới
+            </p>
+            <p>
+                Nhấn vào nút "Tạo" để thêm hợp đồng lao động mới cho nhân viên.
+            </p>
+        </field>
+    </record>
+
+</odoo>
