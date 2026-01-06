@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem
+            id="menu_root"
+            name="QLTL"
+            sequence="0"/>
+
+        <menuitem name="Quản lý tính lương" 
+            id="menu_tinh_luong" 
+            parent="menu_root" 
+            sequence="1"
+            action="action_tinh_luong"
+        />
+        
+    </data>
+</odoo>
