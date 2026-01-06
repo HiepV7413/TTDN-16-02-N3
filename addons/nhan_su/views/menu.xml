@@ -69,18 +69,6 @@
             action="action_danh_sach_hop_dong"
         />
 
-        <menuitem name="Chấm công" 
-                id="menu_cham_cong" 
-                parent="menu_root" 
-                action="action_cham_cong" 
-                sequence="6"/>
-
-        <menuitem
-            id="menu_luong"
-            name="Lương"
-            parent="menu_root"
-            action="action_luong"
-            sequence="7"/>
         
     </data>
 </odoo>

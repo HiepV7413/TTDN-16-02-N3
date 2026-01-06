@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "nhan_su",
+    'name': "QLCC",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,19 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail','nhan_su'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/chuc_vu.xml',
-        'views/don_vi.xml',
-        'views/nhan_vien.xml',
-        'views/lich_su_cong_tac.xml',
-        'views/chung_chi_bang_cap.xml',
-        'views/danh_sach_chung_chi_bang_cap.xml',
-        'views/hop_dong.xml',
-        'views/danh_sach_hop_dong.xml',
+        'views/cham_cong.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode
