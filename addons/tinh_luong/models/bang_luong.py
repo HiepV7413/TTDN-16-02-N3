@@ -3,6 +3,13 @@ from odoo import models, fields, api
 from datetime import date
 from dateutil.relativedelta import relativedelta
 
+# Trong module tinh_luong/models/bang_luong.py
+
+class NhanVienInheritSalary(models.Model):
+    _inherit = 'nhan_vien'
+
+    luong_ids = fields.One2many('bang_luong', 'nhan_vien_id', string='Lịch sử lương')
+
 class BangLuong(models.Model):
     _name = 'bang_luong'
     _description = 'Bảng lương chi tiết'
@@ -22,9 +29,9 @@ class BangLuong(models.Model):
     tong_phut_ve_som = fields.Float("Tổng phút sớm", compute="_compute_data_cham_cong", store=True)
 
     # --- OUTPUT TÍNH LƯƠNG ---
-    luong_ngay_chuan = fields.Float("Lương 1 ngày (Chuẩn)", compute="_compute_luong_final", store=True)
+    luong_ngay = fields.Float("Lương 1 ngày (Chuẩn)", compute="_compute_luong_final", store=True)
     tien_phat = fields.Float("Tiền phạt", compute="_compute_luong_final", store=True)
-    tong_luong_nhan = fields.Float("Thực lĩnh", compute="_compute_luong_final", store=True)
+    tong_luong = fields.Float("Thực lĩnh", compute="_compute_luong_final", store=True)
 
     _sql_constraints = [
         ('unique_payroll_month', 'unique(nhan_vien_id, thang, nam)', 'Nhân viên này đã được tính lương cho tháng này rồi!')
@@ -74,16 +81,16 @@ class BangLuong(models.Model):
 
         for rec in self:
             if not rec.luong_co_ban:
-                rec.luong_ngay_chuan = 0
+                rec.luong_ngay = 0
                 rec.tien_phat = 0
-                rec.tong_luong_nhan = 0
+                rec.tong_luong = 0
                 continue
 
             # 1. Tính lương theo ngày
             luong_1_ngay = rec.luong_co_ban / NGAY_CONG_CHUAN
             luong_1_phut = luong_1_ngay / (GIO_LAM_NGAY * 60)
             
-            rec.luong_ngay_chuan = luong_1_ngay
+            rec.luong_ngay = luong_1_ngay
 
             # 2. Tính lương thực tế dựa trên ngày công
             luong_theo_cong = luong_1_ngay * rec.so_ngay_di_lam
@@ -95,4 +102,4 @@ class BangLuong(models.Model):
             rec.tien_phat = tien_phat_muon + tien_phat_som
 
             # 4. Thực lĩnh
-            rec.tong_luong_nhan = max(0, luong_theo_cong - rec.tien_phat)
+            rec.tong_luong = max(0, luong_theo_cong - rec.tien_phat)
