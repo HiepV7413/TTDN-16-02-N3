@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'QLTL',
+    'name': 'tinh_luong',
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -25,7 +25,7 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/tinh_luong.xml',
+        'views/bang_luong.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode
