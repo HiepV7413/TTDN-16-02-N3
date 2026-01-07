@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
-from datetime import date
+from datetime import datetime
 from odoo.exceptions import ValidationError
 
 class NhanVien(models.Model):
@@ -30,8 +30,6 @@ class NhanVien(models.Model):
     
     # --- LIÊN KẾT MODULE KHÁC ---
     danh_sach_hop_dong_ids = fields.One2many('danh_sach_hop_dong', 'nhan_vien_id', string='Danh sách hợp đồng')
-    cham_cong_ids = fields.One2many('cham_cong', 'nhan_vien_id', string='Lịch sử chấm công')
-    luong_ids = fields.One2many('bang_luong', 'nhan_vien_id', string='Lịch sử lương')
 
     # --- COMPUTE FIELDS ---
     so_nguoi_bang_tuoi = fields.Integer("Số người bằng tuổi", compute="_compute_so_nguoi_bang_tuoi", store=True)
@@ -47,11 +45,11 @@ class NhanVien(models.Model):
         ('ma_dinh_danh_unique', 'unique(ma_dinh_danh)', 'Mã định danh nhân viên phải là duy nhất!')
     ]
 
-    @api.constrains('tuoi')
-    def _check_tuoi(self):
-        for record in self:
-            if record.tuoi < 18:
-                raise ValidationError("Nhân viên phải từ 18 tuổi trở lên.")
+    # @api.constrains('tuoi')
+    # def _check_tuoi(self):
+    #     for record in self:
+    #         if record.tuoi < 18:
+    #             raise ValidationError("Nhân viên phải từ 18 tuổi trở lên.")
 
     # --- LOGIC XỬ LÝ ---
     @api.depends("ho_ten_dem", "ten")
@@ -74,26 +72,26 @@ class NhanVien(models.Model):
                 record.ma_dinh_danh = f"{record.ten.lower()}{chu_cai_dau}{suffix}"
 
     @api.depends("ngay_sinh")
-    def _compute_tuoi(self):
-        today = date.today()
+    def _compute_tinh_tuoi(self): 
         for record in self:
-            if record.ngay_sinh:
-                record.tuoi = today.year - record.ngay_sinh.year
-            else:
-                record.tuoi = 0
+            if record.ngay_sinh:  # Kiểm tra nếu trường ngay_sinh tồn tại
+                year_now = datetime.now().year  
+                record.tuoi = year_now - record.ngay_sinh.year 
 
-    @api.depends("tuoi")
-    def _compute_so_nguoi_bang_tuoi(self):
-        for record in self:
-            if record.tuoi:
-                # Đếm số người cùng tuổi nhưng khác ID
-                count = self.search_count([
-                    ('tuoi', '=', record.tuoi),
-                    ('id', '!=', record.id) # Dùng ID thay vì ma_dinh_danh để an toàn hơn
-                ])
-                record.so_nguoi_bang_tuoi = count
-            else:
-                record.so_nguoi_bang_tuoi = 0
+    # @api.depends("tuoi")
+    # def _compute_so_nguoi_bang_tuoi(self):
+    #     for record in self:
+    #         if not record.tuoi:
+    #            record.so_nguoi_bang_tuoi = 0
+    #            continue
+
+    #         domain = [('tuoi', '=', record.tuoi)]
+
+    #         if record.id and isinstance(record.id, int):
+    #             domain.append(('id', '!=', record.id))
+
+    #         record.so_nguoi_bang_tuoi = self.search_count(domain)
+
 
     @api.depends('danh_sach_hop_dong_ids.trang_thai')
     def _compute_hop_dong_hien_tai(self):
