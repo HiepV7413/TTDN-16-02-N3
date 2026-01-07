@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_tinh_luong,tinh_luong.tinh_luong,model_tinh_luong,base.group_user,1,1,1,1
+access_bang_luong,bang_luong.bang_luong,model_bang_luong,base.group_user,1,1,1,1

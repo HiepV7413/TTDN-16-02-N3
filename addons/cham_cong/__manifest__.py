@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "QLCC",
+    'name': "cham_cong",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -25,7 +25,10 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/dang_ky_ca_lam_theo_ngay.xml',
         'views/cham_cong.xml',
+        'views/dot_dang_ky.xml',
+        'views/don_tu.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode
