@@ -67,6 +67,8 @@
                         <group string="Thông tin lương">
                             <field name="luong_co_ban" widget="monetary"/>
                             <field name="phu_cap" widget="monetary"/>
+                            <field name="bao_hiem_ca_nhan" widget="monetary"/>
+                            <field name="bao_hiem_xa_hoi" widget="monetary"/>
                             <field name="tong_luong" widget="monetary" readonly="1" 
                                    class="oe_subtotal_footer_separator"/>
                         </group>

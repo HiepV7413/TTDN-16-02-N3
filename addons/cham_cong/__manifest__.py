@@ -25,6 +25,7 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/nhan_vien_inherit.xml',
         'views/dang_ky_ca_lam_theo_ngay.xml',
         'views/cham_cong.xml',
         'views/dot_dang_ky.xml',

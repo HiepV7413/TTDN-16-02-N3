@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 from pytz import timezone, UTC
 
 
@@ -136,7 +136,7 @@ class BangChamCong(models.Model):
                 ('trang_thai_duyet', '=', 'da_duyet')
             ], limit=1)
 
-    @api.depends('ca_lam', 'ngay_cham_cong')
+    @api.depends('ca_lam', 'ngay_cham_cong', 'don_tu_id')
     def _compute_gio_ca(self):
         for record in self:
             if not record.ngay_cham_cong or not record.ca_lam:
@@ -147,27 +147,25 @@ class BangChamCong(models.Model):
             user_tz = self.env.user.tz or 'UTC'
             tz = timezone(user_tz)
 
+            # 1. Xác định giờ vào/ra gốc theo ca
             if record.ca_lam == "Sáng":
-                gio_vao = time(7, 30)  # 7:30 AM
-                gio_ra = time(11, 30)  # 11:30 AM
+                gio_vao_goc, gio_ra_goc = time(7, 30), time(11, 30)
             elif record.ca_lam == "Chiều":
-                gio_vao = time(13, 30)  # 1:30 PM
-                gio_ra = time(17, 30)  # 5:30 PM
-            elif record.ca_lam == "Cả ngày":
-                gio_vao = time(7, 30)  # 7:30 AM
-                gio_ra = time(17, 30)  # 5:30 PM
-            else:
-                record.gio_vao_ca = False
-                record.gio_ra_ca = False
-                continue
+                gio_vao_goc, gio_ra_goc = time(13, 30), time(17, 30)
+            else: # Cả ngày
+                gio_vao_goc, gio_ra_goc = time(7, 30), time(17, 30)
 
-            # Convert to datetime in user's timezone
-            thoi_gian_vao = datetime.combine(record.ngay_cham_cong, gio_vao)
-            thoi_gian_ra = datetime.combine(record.ngay_cham_cong, gio_ra)
-            
-            # Store in UTC
-            record.gio_vao_ca = tz.localize(thoi_gian_vao).astimezone(UTC).replace(tzinfo=None)
-            record.gio_ra_ca = tz.localize(thoi_gian_ra).astimezone(UTC).replace(tzinfo=None)
+            dt_vao = tz.localize(datetime.combine(record.ngay_cham_cong, gio_vao_goc)).astimezone(UTC)
+            dt_ra = tz.localize(datetime.combine(record.ngay_cham_cong, gio_ra_goc)).astimezone(UTC)
+
+            # 2. LOGIC MỚI: Nếu có đơn tăng ca, giờ ra ca quy định sẽ là mốc trong đơn
+            # Lưu ý: so_gio_tang_ca trong DB đã là UTC
+            if record.don_tu_id.loai_don == 'tang_ca' and record.don_tu_id.trang_thai_duyet == 'da_duyet':
+                if record.don_tu_id.so_gio_tang_ca:
+                    dt_ra = record.don_tu_id.so_gio_tang_ca 
+
+            record.gio_vao_ca = dt_vao.replace(tzinfo=None)
+            record.gio_ra_ca = dt_ra.replace(tzinfo=None)
 
     @api.depends('gio_vao', 'gio_vao_ca', 'loai_don', 'thoi_gian_xin')
     def _compute_phut_di_muon(self):
