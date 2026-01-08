@@ -15,6 +15,7 @@
                 <field name="so_ngay_vang"/>
                 <field name="tong_phut_di_muon"/>
                 <field name="tong_phut_ve_som"/>
+                <field name="tong_gio_tang_ca" sum="Tổng OT"/> <field name="tien_tang_ca" sum="Tổng tiền OT"/> <field name="tien_phat" sum="Tổng phạt"/>
                 <field name="tong_luong"/>
             </tree>
         </field>
@@ -22,43 +23,42 @@
 
     <!-- FORM VIEW -->
     <record id="view_bang_luong_form" model="ir.ui.view">
-        <field name="name">bang.luong.form</field>
-        <field name="model">bang_luong</field>
-        <field name="arch" type="xml">
-            <form string="Bảng lương">
-                <sheet>
+    <field name="name">bang.luong.form</field>
+    <field name="model">bang_luong</field>
+    <field name="arch" type="xml">
+        <form string="Bảng lương">
+            <sheet>
+                <group col="3">
+                    <field name="nhan_vien_id"/>
+                    <field name="thang"/>
+                    <field name="nam"/>
+                </group>
 
-                    <!-- THÔNG TIN CHUNG -->
-                    <group col="3">
-                        <field name="nhan_vien_id"/>
-                        <field name="thang"/>
-                        <field name="nam"/>
+                <group>
+                    <group string="Dữ liệu chấm công">
+                        <field name="so_ngay_di_lam"/>
+                        <field name="so_ngay_vang"/>
+                        <field name="tong_gio_tang_ca" style="color: blue; font-weight: bold;"/> </group>
+                    <group string="Vi phạm (Phút)">
+                        <field name="tong_phut_di_muon"/>
+                        <field name="tong_phut_ve_som"/>
                     </group>
+                </group>
 
-                    <!-- THÔNG TIN LƯƠNG -->
-                    <group string="Thông tin lương" col="3">
-                        <field name="luong_co_ban" readonly="1"/>
-                        <field name="so_ngay_di_lam" readonly="1"/>
-                        <field name="so_ngay_vang" readonly="1"/>
+                <group string="Chi tiết tài chính">
+                    <group>
+                        <field name="luong_co_ban"/>
+                        <field name="luong_ngay"/>
                     </group>
-
-                    <!-- VI PHẠM -->
-                    <group string="Vi phạm chấm công" col="2">
-                        <field name="tong_phut_di_muon" readonly="1"/>
-                        <field name="tong_phut_ve_som" readonly="1"/>
+                    <group>
+                        <field name="tien_tang_ca" style="color: green;"/> <field name="tien_phat" style="color: red;"/>
+                        <field name="tong_luong" widget="monetary" style="font-size: 1.2em; font-weight: bold;"/>
                     </group>
-
-                    <!-- KẾT QUẢ -->
-                    <group string="Kết quả tính lương" col="3">
-                        <field name="luong_ngay" readonly="1"/>
-                        <field name="tien_phat" readonly="1"/>
-                        <field name="tong_luong" readonly="1"/>
-                    </group>
-
-                </sheet>
-            </form>
-        </field>
-    </record>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
 
 
     <!-- ACTION -->

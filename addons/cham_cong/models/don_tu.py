@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from odoo import models, fields, api
 from datetime import datetime
 
@@ -13,14 +14,19 @@ class DonTu(models.Model):
     trang_thai_duyet = fields.Selection([
         ('cho_duyet', 'Chờ duyệt'),
         ('da_duyet', 'Đã duyệt'),
-        ('tu_choi', 'Từ chối')
+        ('tu_choi', 'Từ chối'),
     ], string="Trạng thái phê duyệt", default='cho_duyet', required=True)
 
     loai_don = fields.Selection([
         ('nghi', 'Đơn xin nghỉ'),
         ('di_muon', 'Đơn xin đi muộn'),
-        ('ve_som', 'Đơn xin về sớm')
+        ('ve_som', 'Đơn xin về sớm'),
+        ('tang_ca', 'Đơn xin tăng ca'),
     ], string="Loại đơn", required=True)
 
-    # Thời gian xin đi muộn/về sớm (phút)
+    # Chuyển từ Date sang Datetime
+    # Dùng để ghi nhận thời điểm bắt đầu hoặc kết thúc tăng ca thực tế
+    so_gio_tang_ca = fields.Datetime("Thời điểm tăng ca", default=fields.Datetime.now)
+
+    # Thời gian cho đi muộn/về sớm (Phút)
     thoi_gian_xin = fields.Float("Thời gian xin (phút)")

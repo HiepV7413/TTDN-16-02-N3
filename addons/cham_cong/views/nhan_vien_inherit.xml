@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_nhan_vien_form_inherit_cham_cong" model="ir.ui.view">
+        <field name="name">nhan.vien.form.inherit.cham.cong</field>
+        <field name="model">nhan_vien</field>
+        <field name="inherit_id" ref="nhan_su.view_nhan_vien_form"/> 
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Danh sách chấm công">
+                    <field name="cham_cong_ids"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

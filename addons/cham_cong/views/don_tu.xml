@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="view_don_tu_form" model="ir.ui.view">
-            <field name="name">don_tu</field>
+            <field name="name">don_tu.form</field>
             <field name="model">don_tu</field>
             <field name="arch" type="xml">
                 <form>
@@ -14,7 +14,14 @@
                             <field name="ngay_ap_dung"/>
                             <field name="trang_thai_duyet"/>
                             <field name="loai_don"/>
-                            <field name="thoi_gian_xin"/>
+                            
+                            <field name="thoi_gian_xin" 
+                                   attrs="{'invisible': [('loai_don', 'not in', ['di_muon', 've_som'])], 
+                                           'required': [('loai_don', 'in', ['di_muon', 've_som'])]}"/>
+                            
+                            <field name="so_gio_tang_ca" 
+                                   attrs="{'invisible': [('loai_don', '!=', 'tang_ca')], 
+                                           'required': [('loai_don', '=', 'tang_ca')]}"/>
                         </group>
                     </sheet>
                 </form>
@@ -22,31 +29,35 @@
         </record>
 
         <record id="view_don_tu_tree" model="ir.ui.view">
-            <field name="name">don_tu</field>
+            <field name="name">don_tu.tree</field>
             <field name="model">don_tu</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree decoration-info="loai_don == 'tang_ca'" decoration-warning="loai_don == 'nghi'">
                     <field name="nhan_vien_id"/>
-                    <field name="ngay_lam_don"/>
                     <field name="ngay_ap_dung"/>
-                    <field name="trang_thai_duyet"/>
                     <field name="loai_don"/>
-                    <field name="thoi_gian_xin"/>
+                    <field name="thoi_gian_xin" string="Phút (Trễ/Sớm)"/>
+                    <field name="so_gio_tang_ca" string="Mốc giờ tăng ca"/>
+                    <field name="trang_thai_duyet" widget="badge" 
+                           decoration-success="trang_thai_duyet == 'da_duyet'" 
+                           decoration-danger="trang_thai_duyet == 'tu_choi'"/>
                 </tree>
             </field>
         </record>
 
         <record model="ir.ui.view" id="don_tu_search">
+            <field name="name">don_tu.search</field>
             <field name="model">don_tu</field>
             <field name="arch" type="xml">
                 <search>
                     <field name="nhan_vien_id"/>
-                        <field name="nhan_vien_id"/>
-                        <field name="ngay_lam_don"/>
-                        <field name="ngay_ap_dung"/>
-                        <field name="trang_thai_duyet"/>
-                        <field name="loai_don"/>
-                        <field name="thoi_gian_xin"/>
+                    <field name="ngay_ap_dung"/>
+                    <field name="loai_don"/>
+                    <field name="trang_thai_duyet"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Nhân viên" name="group_by_nhan_vien" context="{'group_by': 'nhan_vien_id'}"/>
+                        <filter string="Loại đơn" name="group_by_loai_don" context="{'group_by': 'loai_don'}"/>
+                    </group>
                 </search>
             </field>
         </record>
@@ -55,9 +66,7 @@
             <field name="name">Đơn từ</field>
             <field name="res_model">don_tu</field>
             <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref = "don_tu_search"/>
+            <field name="search_view_id" ref="don_tu_search"/>
         </record>
     </data>
 </odoo>
-        
-    

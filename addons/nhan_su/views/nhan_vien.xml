@@ -14,6 +14,8 @@
                             <field name="ho_va_ten"/>
                             <field name="ma_dinh_danh"/>
                             <field name="luong_co_ban"/>
+                            <field name="bao_hiem_ca_nhan"/>
+                            <field name="bao_hiem_xa_hoi"/>
                             <field name="ngay_sinh"/>
                             <field name="tuoi"/>
                             <field name="so_nguoi_bang_tuoi"/>
@@ -45,6 +47,8 @@
                     <field name="ten"/>
                     <field name="ho_va_ten"/>
                     <field name="luong_co_ban"/>
+                    <field name="bao_hiem_ca_nhan"/>
+                    <field name="bao_hiem_xa_hoi"/>
                     <field name="ngay_sinh"/>
                     <field name="tuoi"/>
                     <field name="so_nguoi_bang_tuoi"/>

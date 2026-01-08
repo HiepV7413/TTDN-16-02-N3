@@ -22,9 +22,24 @@ class NhanVien(models.Model):
     que_quan = fields.Char("Quê quán")
     email = fields.Char("Email")
     so_dien_thoai = fields.Char("Số điện thoại")
-    
     # --- CÔNG VIỆC ---
-    luong_co_ban = fields.Float(string='Lương cơ bản', help='Lương cơ bản theo tháng')
+    luong_co_ban = fields.Float(
+        string='Lương cơ bản', 
+        related='hop_dong_hien_tai_id.luong_co_ban', 
+        store=True, 
+        readonly=True,
+        help='Lương được lấy tự động từ hợp đồng đang hiệu lực'
+    )
+    bao_hiem_ca_nhan = fields.Float(
+        string='Bảo hiểm cá nhân', 
+        related='hop_dong_hien_tai_id.bao_hiem_ca_nhan', 
+        store=True, readonly=True
+    )
+    bao_hiem_xa_hoi = fields.Float(
+        string='Bảo hiểm xã hội', 
+        related='hop_dong_hien_tai_id.bao_hiem_xa_hoi', 
+        store=True, readonly=True
+    )
     lich_su_cong_tac_ids = fields.One2many("lich_su_cong_tac", "nhan_vien_id", string="Lịch sử công tác")
     danh_sach_chung_chi_bang_cap_ids = fields.One2many("danh_sach_chung_chi_bang_cap", "nhan_vien_id", string="Chứng chỉ bằng cấp")
     
@@ -39,7 +54,7 @@ class NhanVien(models.Model):
 
     so_ngay_lam_thang_nay = fields.Integer("Số ngày làm tháng này", compute='_compute_thong_ke_cham_cong')
     so_lan_tre_thang_nay = fields.Integer("Số lần trễ tháng này", compute='_compute_thong_ke_cham_cong')
-
+    
     # --- CONSTRAINTS ---
     _sql_constraints = [
         ('ma_dinh_danh_unique', 'unique(ma_dinh_danh)', 'Mã định danh nhân viên phải là duy nhất!')
@@ -93,12 +108,13 @@ class NhanVien(models.Model):
     #         record.so_nguoi_bang_tuoi = self.search_count(domain)
 
 
-    @api.depends('danh_sach_hop_dong_ids.trang_thai')
+    @api.depends('danh_sach_hop_dong_ids.trang_thai', 'danh_sach_hop_dong_ids.luong_co_ban')
     def _compute_hop_dong_hien_tai(self):
         for record in self:
-            # Lấy hợp đồng đang hiệu lực gần nhất
+            # Lấy hợp đồng đang hiệu lực
             hop_dong = record.danh_sach_hop_dong_ids.filtered(lambda x: x.trang_thai == 'dang_hieu_luc')
-            record.hop_dong_hien_tai_id = hop_dong[0] if hop_dong else False
+            # Nếu có nhiều hợp đồng hiệu lực (do lỗi data), lấy cái mới nhất
+            record.hop_dong_hien_tai_id = hop_dong.sorted('ngay_bat_dau', reverse=True)[0] if hop_dong else False
 
     def _compute_thong_ke_cham_cong(self):
         today = fields.Date.today()
