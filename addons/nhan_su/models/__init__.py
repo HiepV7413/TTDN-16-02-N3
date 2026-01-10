@@ -8,3 +8,4 @@ from . import chung_chi_bang_cap
 from . import danh_sach_chung_chi_bang_cap
 from . import hop_dong
 from . import danh_sach_hop_dong
+from . import nguoi_phu_thuoc

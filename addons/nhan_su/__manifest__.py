@@ -32,6 +32,7 @@
         'views/chung_chi_bang_cap.xml',
         'views/danh_sach_chung_chi_bang_cap.xml',
         'views/hop_dong.xml',
+        "views/nguoi_phu_thuoc.xml",
         'views/danh_sach_hop_dong.xml',
         'views/menu.xml',
     ],

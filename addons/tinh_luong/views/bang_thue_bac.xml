@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_thue_thu_nhap_bac_tree" model="ir.ui.view">
+            <field name="name">thue.thu.nhap.bac.tree</field>
+            <field name="model">thue_thu_nhap_bac</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="thue_id"/>
+                    <field name="bac"/>
+                    <field name="muc_thu_nhap_tu"/>
+                    <field name="muc_thu_nhap_den"/>
+                    <field name="thue_suat"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_thue_thu_nhap_bac_form" model="ir.ui.view">
+            <field name="name">thue.thu.nhap.bac.form</field>
+            <field name="model">thue_thu_nhap_bac</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="thue_id"/>
+                            <field name="bac"/>
+                            <field name="muc_thu_nhap_tu"/>
+                            <field name="muc_thu_nhap_den"/>
+                            <field name="thue_suat"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_thue_thu_nhap_bac" model="ir.actions.act_window">
+            <field name="name">Bậc thuế TNCN</field>
+            <field name="res_model">thue_thu_nhap_bac</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>
