@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+                <!-- FORM VIEW -->
+        <record id="view_nguoi_phu_thuoc_form" model="ir.ui.view">
+            <field name="name">nguoi.phu.thuoc.form</field>
+            <field name="model">nguoi_phu_thuoc</field>
+            <field name="arch" type="xml">
+                <form string="Người phụ thuộc">
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="ho_ten"/>
+                                <field name="quan_he"/>
+                                <field name="ngay_sinh"/>
+                            </group>
+
+                            <group>
+                                <field name="nhan_vien_id"/>
+                                <field name="ma_so_thue"/>
+                                <field name="dang_hieu_luc" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group string="Thời gian giảm trừ">
+                            <field name="ngay_bat_dau_giam_tru"/>
+                            <field name="ngay_ket_thuc_giam_tru"/>
+                        </group>
+
+                        <group>
+                            <field name="ghi_chu"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- TREE VIEW -->
+        <record id="view_nguoi_phu_thuoc_tree" model="ir.ui.view">
+            <field name="name">nguoi.phu.thuoc.tree</field>
+            <field name="model">nguoi_phu_thuoc</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="ho_ten"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="quan_he"/>
+                    <field name="ma_so_thue"/>
+                    <field name="ngay_bat_dau_giam_tru"/>
+                    <field name="ngay_ket_thuc_giam_tru"/>
+                    <field name="dang_hieu_luc"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+                <!-- ACTION -->
+        <record id="action_nguoi_phu_thuoc" model="ir.actions.act_window">
+            <field name="name">Người phụ thuộc</field>
+            <field name="res_model">nguoi_phu_thuoc</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>
+        
+    

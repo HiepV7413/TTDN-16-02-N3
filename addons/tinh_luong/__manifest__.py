@@ -27,6 +27,10 @@
         'security/ir.model.access.csv',
         'views/nhan_vien_inherit.xml',
         'views/bang_luong.xml',
+        'views/bang_thue.xml',
+        'views/bang_thue_bac.xml',
+        "views/phieu_luong.xml",
+        "views/email_template_phieu_luong.xml",
         'views/menu.xml',
     ],
     # only loaded in demonstration mode

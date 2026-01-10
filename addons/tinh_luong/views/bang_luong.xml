@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
+<data>
     <!-- TREE VIEW -->
     <record id="view_bang_luong_tree" model="ir.ui.view">
         <field name="name">bang.luong.tree</field>
@@ -50,6 +50,11 @@
                         <field name="luong_co_ban"/>
                         <field name="luong_ngay"/>
                     </group>
+                    <group string="Thuế">
+    <field name="thue_id"/>
+    <field name="tien_thue_tncn" style="color:red;"/>
+</group>
+
                     <group>
                         <field name="tien_tang_ca" style="color: green;"/> <field name="tien_phat" style="color: red;"/>
                         <field name="tong_luong" widget="monetary" style="font-size: 1.2em; font-weight: bold;"/>
@@ -67,6 +72,6 @@
         <field name="res_model">bang_luong</field>
         <field name="view_mode">tree,form</field>
     </record>
-
+</data>
 </odoo>
 

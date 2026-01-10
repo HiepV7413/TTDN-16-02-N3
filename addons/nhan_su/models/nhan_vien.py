@@ -40,6 +40,9 @@ class NhanVien(models.Model):
         related='hop_dong_hien_tai_id.bao_hiem_xa_hoi', 
         store=True, readonly=True
     )
+    phu_cap = fields.Float(string='Phụ cấp', 
+        related='hop_dong_hien_tai_id.phu_cap', 
+        store=True, readonly=True)
     lich_su_cong_tac_ids = fields.One2many("lich_su_cong_tac", "nhan_vien_id", string="Lịch sử công tác")
     danh_sach_chung_chi_bang_cap_ids = fields.One2many("danh_sach_chung_chi_bang_cap", "nhan_vien_id", string="Chứng chỉ bằng cấp")
     
@@ -59,6 +62,17 @@ class NhanVien(models.Model):
     _sql_constraints = [
         ('ma_dinh_danh_unique', 'unique(ma_dinh_danh)', 'Mã định danh nhân viên phải là duy nhất!')
     ]
+    nguoi_phu_thuoc_ids = fields.One2many(
+    'nguoi_phu_thuoc',
+    'nhan_vien_id',
+    string='Người phụ thuộc'
+    )
+
+    so_nguoi_phu_thuoc = fields.Integer(
+        string='Số người phụ thuộc',
+        compute='_compute_so_nguoi_phu_thuoc',
+        store=True
+    )
 
     # @api.constrains('tuoi')
     # def _check_tuoi(self):
@@ -67,6 +81,13 @@ class NhanVien(models.Model):
     #             raise ValidationError("Nhân viên phải từ 18 tuổi trở lên.")
 
     # --- LOGIC XỬ LÝ ---
+    @api.depends('nguoi_phu_thuoc_ids.dang_hieu_luc')
+    def _compute_so_nguoi_phu_thuoc(self):
+        for rec in self:
+            rec.so_nguoi_phu_thuoc = len(
+                rec.nguoi_phu_thuoc_ids.filtered(lambda x: x.dang_hieu_luc)
+            )
+            
     @api.depends("ho_ten_dem", "ten")
     def _compute_ho_va_ten(self):
         for record in self:

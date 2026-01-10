@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- TREE VIEW -->
+        <record id="view_phieu_luong_tree" model="ir.ui.view">
+            <field name="name">phieu.luong.tree</field>
+            <field name="model">phieu_luong</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="thang"/>
+                    <field name="nam"/>
+                    <field name="tong_thuc_linh"/>
+                    <field name="trang_thai"/>
+                    <field name="ngay_tra"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_phieu_luong_form" model="ir.ui.view">
+            <field name="name">phieu.luong.form</field>
+            <field name="model">phieu_luong</field>
+            <field name="arch" type="xml">
+                <form string="Phiếu lương">
+                    <header>
+                        <button name="action_xac_nhan"
+        string="Xác nhận"
+        type="object"
+        class="btn-primary"
+        attrs="{'invisible': [('trang_thai', '!=', 'nhap')]}"/>
+
+<button name="action_da_tra"
+        string="Đã trả"
+        type="object"
+        class="btn-success"
+        attrs="{'invisible': [('trang_thai', '!=', 'xac_nhan')]}"/>
+
+
+                        <field name="trang_thai"
+                               widget="statusbar"
+                               statusbar_visible="nhap,xac_nhan,da_tra"/>
+                    </header>
+
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="nhan_vien_id"/>
+                                <field name="bang_luong_id"/>
+                            </group>
+                            <group>
+                                <field name="thang"/>
+                                <field name="nam"/>
+                                <field name="ngay_tra"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Chi tiết lương">
+                                <group>
+                                    <field name="luong_theo_cong" readonly="1"/>
+                                    <field name="tien_tang_ca" readonly="1"/>
+                                    <field name="tien_phat" readonly="1"/>
+                                    <field name="tien_thue_tncn" readonly="1"/>
+                                    <field name="tong_thuc_linh" readonly="1"/>
+                                    <field name="da_gui_email" readonly="1"/>
+                                </group>
+                            </page>
+                            
+
+
+                            <page string="Ghi chú">
+                                <field name="ghi_chu"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_phieu_luong" model="ir.actions.act_window">
+            <field name="name">Phiếu lương</field>
+            <field name="res_model">phieu_luong</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

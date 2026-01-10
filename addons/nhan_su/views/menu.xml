@@ -12,6 +12,15 @@
             sequence="1"
             action="action_nhan_vien"
         />
+        <!-- MENU NGƯỜI PHỤ THUỘC -->
+        <menuitem
+            id="menu_nguoi_phu_thuoc"
+            name="Người phụ thuộc"
+            parent="menu_root"
+            action="action_nguoi_phu_thuoc"
+            sequence="30"
+        />
+
 
         <menuitem name="Danh mục chung" 
             id="menu_danh_muc_chung" 
