@@ -28,6 +28,7 @@ class BangLuong(models.Model):
     )
     bao_hiem_ca_nhan = fields.Float(related='nhan_vien_id.bao_hiem_ca_nhan', store=True)
     bao_hiem_xa_hoi = fields.Float(related='nhan_vien_id.bao_hiem_xa_hoi', store=True)
+    phu_cap = fields.Float(related='nhan_vien_id.phu_cap', store=True)
 
     # --- INPUT TỪ CHẤM CÔNG ---
     so_ngay_di_lam = fields.Float("Số ngày công", compute="_compute_data_cham_cong", store=True)
@@ -41,6 +42,19 @@ class BangLuong(models.Model):
     tien_phat = fields.Float("Tiền phạt", compute="_compute_luong_final", store=True)
     tong_luong = fields.Float("Thực lĩnh", compute="_compute_luong_final", store=True)
     tien_tang_ca = fields.Float("Tiền tăng ca (x2)", compute="_compute_luong_final", store=True)
+    thue_id = fields.Many2one(
+    'thue_thu_nhap',
+    string='Thuế áp dụng',
+    domain=[('trang_thai', '=', 'dang_ap_dung')]
+    )
+
+    tien_thue_tncn = fields.Float(
+    string='Thuế TNCN',
+    compute='_compute_luong_final',
+    store=True
+    )
+    
+
 
     _sql_constraints = [
         ('unique_payroll_month', 'unique(nhan_vien_id, thang, nam)', 'Nhân viên này đã được tính lương cho tháng này rồi!')
@@ -100,23 +114,96 @@ class BangLuong(models.Model):
             
             rec.tong_gio_tang_ca = tong_ot_hours
 
-    @api.depends('luong_co_ban', 'so_ngay_di_lam', 'tong_phut_di_muon', 'tong_gio_tang_ca')
+    def _tinh_thue_luy_tien(self, thu_nhap_tinh_thue, thue):
+        tong_thue = 0
+        for bac in thue.bac_ids.sorted('bac'):
+            muc_duoi = bac.muc_thu_nhap_tu
+            muc_tren = bac.muc_thu_nhap_den or thu_nhap_tinh_thue
+
+            if thu_nhap_tinh_thue <= muc_duoi:
+                break
+
+            phan_chiu_thue = min(thu_nhap_tinh_thue, muc_tren) - muc_duoi
+            tong_thue += phan_chiu_thue * bac.thue_suat / 100
+
+        return tong_thue
+
+
+
+    @api.depends(
+    'luong_co_ban',
+    'so_ngay_di_lam',
+    'tong_phut_di_muon',
+    'tong_phut_ve_som',
+    'tong_gio_tang_ca',
+    'thue_id'
+    )
     def _compute_luong_final(self):
-        NGAY_CONG_CHUAN = 26.0
+        NGAY_CONG_CHUAN = 20
         GIO_LAM_NGAY = 8.0
+
         for rec in self:
-            # 1. Tính lương cơ sở
-            tong_thu_nhap_thang = (rec.luong_co_ban or 0) + (rec.bao_hiem_ca_nhan or 0) + (rec.bao_hiem_xa_hoi or 0)
-            luong_1_ngay = tong_thu_nhap_thang / NGAY_CONG_CHUAN
+            # 1. Tổng thu nhập
+            tong_thu_nhap = (
+                (rec.luong_co_ban or 0) +
+                (rec.phu_cap or 0)
+            )
+
+            luong_1_ngay = tong_thu_nhap / NGAY_CONG_CHUAN
             luong_1_gio = luong_1_ngay / GIO_LAM_NGAY
             luong_1_phut = luong_1_gio / 60
 
-            # 2. Tiền tăng ca (Hệ số 2)
+            # 2. Tăng ca
             rec.tien_tang_ca = rec.tong_gio_tang_ca * luong_1_gio * 2
 
-            # 3. Các khoản khác
+            # 3. Lương theo công
             luong_theo_cong = luong_1_ngay * rec.so_ngay_di_lam
-            rec.tien_phat = (rec.tong_phut_di_muon + rec.tong_phut_ve_som) * luong_1_phut
 
-            # 4. Tổng thực lĩnh mới
-            rec.tong_luong = max(0, luong_theo_cong + rec.tien_tang_ca - rec.tien_phat)
+            # 4. Phạt
+            rec.tien_phat = (
+                (rec.tong_phut_di_muon + rec.tong_phut_ve_som)
+                * luong_1_phut
+            )
+
+            # 5. Thu nhập trước thuế
+            thu_nhap_truoc_thue = (
+                luong_theo_cong +
+                rec.tien_tang_ca -
+                rec.tien_phat -
+                (rec.bao_hiem_ca_nhan or 0) -
+                (rec.bao_hiem_xa_hoi or 0)
+            )
+
+
+            # 6. Tính thuế
+            rec.tien_thue_tncn = 0
+            so_nguoi_pt = rec.nhan_vien_id.so_nguoi_phu_thuoc or 0
+            if rec.thue_id:
+                tong_giam_tru = (
+                    rec.thue_id.giam_tru_ban_than +
+                    so_nguoi_pt * rec.thue_id.giam_tru_nguoi_phu_thuoc
+                )
+                thu_nhap_tinh_thue = max(
+                    0,
+                    thu_nhap_truoc_thue - tong_giam_tru
+                )
+
+                if rec.thue_id.loai_thue == 'luy_tien':
+                    rec.tien_thue_tncn = self._tinh_thue_luy_tien(
+                        thu_nhap_tinh_thue,
+                        rec.thue_id
+                    )
+
+                elif rec.thue_id.loai_thue == 'co_dinh':
+                    rec.tien_thue_tncn = (
+                        thu_nhap_tinh_thue *
+                        rec.thue_id.bac_ids[:1].thue_suat / 100
+                    )
+            rec.tien_thue_tncn = round(rec.tien_thue_tncn, 0)
+
+
+            # 7. Thực lĩnh
+            rec.tong_luong = max(
+                0,
+                thu_nhap_truoc_thue - rec.tien_thue_tncn
+            )

@@ -1,17 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+
+        <!-- MENU ROOT -->
         <menuitem
             id="menu_root"
             name="QLTL"
             sequence="0"/>
 
-        <menuitem name="Quản lý tính lương" 
-            id="menu_bang_luong" 
-            parent="menu_root" 
+        <!-- MENU BẢNG LƯƠNG -->
+        <menuitem
+            id="menu_bang_luong"
+            name="Quản lý tính lương"
+            parent="menu_root"
             sequence="1"
             action="action_bang_luong"
         />
-        
+
+        <!-- MENU CHA: QUẢN LÝ THUẾ -->
+        <menuitem
+            id="menu_thue_root"
+            name="Quản lý Thuế"
+            parent="menu_root"
+            sequence="2"
+        />
+
+        <!-- MENU CON -->
+        <menuitem
+            id="menu_thue_thu_nhap"
+            name="Cấu hình Thuế TNCN"
+            parent="menu_thue_root"
+            action="action_thue_thu_nhap"
+            sequence="1"
+        />
+
+        <menuitem
+            id="menu_thue_bac"
+            name="Bậc thuế"
+            parent="menu_thue_root"
+            action="action_thue_thu_nhap_bac"
+            sequence="2"
+        />
+        <menuitem id="menu_phieu_luong"
+          name="Phiếu lương"
+          parent="menu_root"
+          action="action_phieu_luong"
+          sequence="3"/>
+
     </data>
 </odoo>
