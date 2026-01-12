@@ -25,7 +25,8 @@
                                 PHIẾU LƯƠNG
                             </h1>
                             <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 16px; opacity: 0.9;">
-                                Tháng {% object.thang %}/{{ object.nam }}
+                                Ngày 
+<span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')"/>
                             </p>
                         </td>
                     </tr>
@@ -33,10 +34,10 @@
                     <tr>
                         <td style="padding: 30px 40px 20px 40px;">
                             <p style="margin: 0; font-size: 16px; color: #333333; line-height: 1.6;">
-                                Kính gửi <strong>{{ object.nhan_vien_id.ho_va_ten }}</strong>,
+                                Kính gửi <strong><t t-esc="object.nhan_vien_id.ho_va_ten"/></strong>,
                             </p>
                             <p style="margin: 15px 0 0 0; font-size: 14px; color: #666666; line-height: 1.6;">
-                                Phiếu lương của bạn cho tháng {{ object.thang }}/{{ object.nam }} đã được xử lý. 
+                                Phiếu lương của bạn cho tháng <t t-esc="object.thang"/>/<t t-esc="object.nam"/> đã được xử lý. 
                                 Chi tiết như sau:
                             </p>
                         </td>
@@ -50,7 +51,7 @@
                                         <span style="color: #666666; font-size: 14px;">Mã nhân viên:</span>
                                     </td>
                                     <td align="right" style="padding: 8px 0;">
-                                        <strong style="color: #333333; font-size: 14px;">{{ object.nhan_vien_id.ma_dinh_danh or 'N/A' }}</strong>
+                                        <strong style="color: #333333; font-size: 14px;"><t t-esc="object.nhan_vien_id.ma_dinh_danh or 'N/A'"/></strong>
                                     </td>
                                 </tr>
                                 <tr>
@@ -58,7 +59,7 @@
                                         <span style="color: #666666; font-size: 14px;">Số phiếu lương:</span>
                                     </td>
                                     <td align="right" style="padding: 8px 0;">
-                                        <strong style="color: #333333; font-size: 14px;">{{ object.name }}</strong>
+                                        <strong style="color: #333333; font-size: 14px;"><t t-esc="object.name"/></strong>
                                     </td>
                                 </tr>
                                 <tr>
@@ -66,7 +67,7 @@
                                         <span style="color: #666666; font-size: 14px;">Ngày trả lương:</span>
                                     </td>
                                     <td align="right" style="padding: 8px 0;">
-                                        <strong style="color: #333333; font-size: 14px;">{{ object.ngay_tra or 'N/A' }}</strong>
+                                        <strong style="color: #333333; font-size: 14px;"><t t-esc="object.ngay_tra or 'N/A'"/></strong>
                                     </td>
                                 </tr>
                             </table>
@@ -86,56 +87,91 @@
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
                                 <tr>
                                     <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
-                                        <span style="color: #333333; font-size: 14px;">Lương theo công</span>
+                                        <span style="color: #333333; font-size: 14px;">Lương cơ bản</span>
                                     </td>
                                     <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
-                                        <strong style="color: #28a745; font-size: 14px;">{{ '{:,.0f}'.format(object.luong_theo_cong) }} ₫</strong>
+                                        <strong style="color: #28a745; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.bang_luong_id.luong_co_ban)"/> ₫</strong>
                                     </td>
                                 </tr>
 
-                                {% if object.tien_tang_ca %}
                                 <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <span style="color: #333333; font-size: 14px;">Số ngày đi làm</span>
+                                    </td>
+                                    <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <strong style="color: #28a745; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.so_ngay_di_lam)"/> ngày</strong>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <span style="color: #333333; font-size: 14px;">Tiền phụ cấp</span>
+                                    </td>
+                                    <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <strong style="color: #28a745; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.tien_phu_cap)"/> ₫</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <span style="color: #333333; font-size: 14px;">Tiền bảo hiểm</span>
+                                    </td>
+                                    <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <strong style="color: #28a745; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.bao_hiem_ca_nhan)"/> ₫</strong>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <span style="color: #333333; font-size: 14px;">Tiền bảo hiểm xã hội</span>
+                                    </td>
+                                    <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <strong style="color: #28a745; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.bao_hiem_xa_hoi)"/> ₫</strong>
+                                    </td>
+                                </tr>
+
+                                <t t-if="object.tien_tang_ca">
+                                <tr>  
                                     <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
                                         <span style="color: #333333; font-size: 14px;">Tiền tăng ca</span>
                                     </td>
                                     <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
-                                        <strong style="color: #28a745; font-size: 14px;">{{ '{:,.0f}'.format(object.tien_tang_ca) }} ₫</strong>
+                                        <strong style="color: #28a745; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.tien_tang_ca)"/> ₫</strong>
                                     </td>
                                 </tr>
-                                {% endif %}
+                                </t>
 
-                                {% if object.tien_thuong %}
+                                <t t-if="object.tien_thuong">
                                 <tr>
                                     <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
                                         <span style="color: #333333; font-size: 14px;">Tiền thưởng</span>
                                     </td>
                                     <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
-                                        <strong style="color: #28a745; font-size: 14px;">{{ '{:,.0f}'.format(object.tien_thuong) }} ₫</strong>
+                                        <strong style="color: #28a745; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.tien_thuong)"/> ₫</strong>
                                     </td>
                                 </tr>
-                                {% endif %}
+                                </t>
 
-                                {% if object.tien_phat %}
+                                <t t-if="object.tien_phat">
                                 <tr>
                                     <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
                                         <span style="color: #333333; font-size: 14px;">Tiền phạt</span>
                                     </td>
                                     <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
-                                        <strong style="color: #dc3545; font-size: 14px;">-{{ '{:,.0f}'.format(object.tien_phat) }} ₫</strong>
+                                        <strong style="color: #dc3545; font-size: 14px;">-<t t-esc="'{:,.0f}'.format(object.tien_phat)"/> ₫</strong>
                                     </td>
                                 </tr>
-                                {% endif %}
+                                </t>
 
-                                {% if object.tien_thue_tncn %}
+                                <t t-if="object.tien_thue_tncn">
                                 <tr>
                                     <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
                                         <span style="color: #333333; font-size: 14px;">Thuế TNCN</span>
                                     </td>
                                     <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
-                                        <strong style="color: #dc3545; font-size: 14px;">-{{ '{:,.0f}'.format(object.tien_thue_tncn) }} ₫</strong>
+                                        <strong style="color: #dc3545; font-size: 14px;">-<t t-esc="'{:,.0f}'.format(object.tien_thue_tncn)"/> ₫</strong>
                                     </td>
                                 </tr>
-                                {% endif %}
+                               </t>
                             </table>
                         </td>
                     </tr>
@@ -149,7 +185,7 @@
                                     </td>
                                     <td align="right">
                                         <span style="color: #ffffff; font-size: 24px; font-weight: bold;">
-                                            {{ '{:,.0f}'.format(object.tong_thuc_linh) }} ₫
+                                            <t t-esc="'{:,.0f}'.format(object.tong_thuc_linh)"/> ₫
                                         </span>
                                     </td>
                                 </tr>
@@ -157,17 +193,17 @@
                         </td>
                     </tr>
 
-                    {% if object.ghi_chu %}
+                     <t t-if="object.ghi_chu">
                     <tr>
                         <td style="padding: 10px 40px;">
                             <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 4px;">
                                 <p style="margin: 0; font-size: 13px; color: #856404;">
-                                    <strong>Ghi chú:</strong> {{ object.ghi_chu }}
+                                    <strong>Ghi chú:</strong> <t t-esc="object.ghi_chu"/>
                                 </p>
                             </div>
                         </td>
                     </tr>
-                    {% endif %}
+                    </t>
 
                     <tr>
                         <td style="padding: 20px 40px 30px 40px;">
@@ -188,8 +224,7 @@
                                 Đây là email tự động, vui lòng không trả lời email này.
                             </p>
                             <p style="margin: 10px 0 0 0; font-size: 12px; color: #999999;">
-                                © {{ datetime.datetime.now().year }}. All rights reserved.
-                            </p>
+© <t t-esc="datetime.datetime.now().year"/>. All rights reserved                            </p>
                         </td>
                     </tr>
 

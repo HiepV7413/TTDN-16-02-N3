@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_bang_luong,bang_luong.bang_luong,model_bang_luong,base.group_user,1,1,1,1
+access_tien_thuong,tien_thuong.tien_thuong,model_tien_thuong,base.group_user,1,1,1,1
 access_phieu_luong,phieu_luong.phieu_luong,model_phieu_luong,base.group_user,1,1,1,1
 access_thue_thu_nhap,thue_thu_nhap.thue_thu_nhap,model_thue_thu_nhap,base.group_user,1,1,1,1
 access_thue_thu_nhap_bac,thue_thu_nhap.access_thue_thu_nhap_bac,model_thue_thu_nhap_bac,base.group_user,1,1,1,1
