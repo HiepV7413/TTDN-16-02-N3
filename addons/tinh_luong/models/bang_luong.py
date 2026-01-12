@@ -30,6 +30,14 @@ class BangLuong(models.Model):
     bao_hiem_xa_hoi = fields.Float(related='nhan_vien_id.bao_hiem_xa_hoi', store=True)
     phu_cap = fields.Float(related='nhan_vien_id.phu_cap', store=True)
 
+    tien_thuong = fields.Float(
+        string="Tiền thưởng",
+        compute="_compute_tien_thuong",
+        store=True,
+        readonly=True
+    )
+
+
     # --- INPUT TỪ CHẤM CÔNG ---
     so_ngay_di_lam = fields.Float("Số ngày công", compute="_compute_data_cham_cong", store=True)
     so_ngay_vang = fields.Float("Số ngày vắng", compute="_compute_data_cham_cong", store=True)
@@ -59,6 +67,35 @@ class BangLuong(models.Model):
     _sql_constraints = [
         ('unique_payroll_month', 'unique(nhan_vien_id, thang, nam)', 'Nhân viên này đã được tính lương cho tháng này rồi!')
     ]
+
+    @api.depends('nhan_vien_id', 'thang', 'nam')
+    def _compute_tien_thuong(self):
+        for rec in self:
+            tong_thuong = 0.0
+
+            if not rec.nhan_vien_id:
+                rec.tien_thuong = 0
+                continue
+
+            domain = [
+                ('trang_thai', '=', 'da_duyet'),
+                ('cong_vao_luong', '=', True),
+                ('thang', '=', rec.thang),
+                ('nam', '=', rec.nam),
+                '|',
+                '&',
+                    ('kieu_thuong', '=', 'mot_nguoi'),
+                    ('nhan_vien_id', '=', rec.nhan_vien_id.id),
+                ('kieu_thuong', '=', 'tat_ca')
+            ]
+
+            thuong_ids = self.env['tien_thuong'].search(domain)
+
+            for thuong in thuong_ids:
+                tong_thuong += thuong.so_tien
+
+            rec.tien_thuong = tong_thuong
+
 
     @api.depends('nhan_vien_id', 'thang', 'nam')
     def _compute_name(self):
@@ -131,12 +168,14 @@ class BangLuong(models.Model):
 
 
     @api.depends(
-    'luong_co_ban',
-    'so_ngay_di_lam',
-    'tong_phut_di_muon',
-    'tong_phut_ve_som',
-    'tong_gio_tang_ca',
-    'thue_id'
+        'luong_co_ban',
+        'phu_cap',
+        'so_ngay_di_lam',
+        'tong_phut_di_muon',
+        'tong_phut_ve_som',
+        'tong_gio_tang_ca',
+        'tien_thuong',
+        'thue_id'
     )
     def _compute_luong_final(self):
         NGAY_CONG_CHUAN = 20
@@ -168,12 +207,12 @@ class BangLuong(models.Model):
             # 5. Thu nhập trước thuế
             thu_nhap_truoc_thue = (
                 luong_theo_cong +
-                rec.tien_tang_ca -
+                rec.tien_tang_ca +
+                rec.tien_thuong -
                 rec.tien_phat -
                 (rec.bao_hiem_ca_nhan or 0) -
                 (rec.bao_hiem_xa_hoi or 0)
             )
-
 
             # 6. Tính thuế
             rec.tien_thue_tncn = 0

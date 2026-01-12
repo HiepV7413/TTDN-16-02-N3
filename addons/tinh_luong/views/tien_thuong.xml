@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- TREE VIEW -->
+        <record id="view_tien_thuong_tree" model="ir.ui.view">
+        <field name="name">tien_thuong.tree</field>
+        <field name="model">tien_thuong</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="trang_thai == 'da_chi'"
+                  decoration-warning="trang_thai == 'da_duyet'">
+                <field name="name"/>
+                <field name="thang"/>
+                <field name="nam"/>
+                <field name="kieu_thuong"/>
+                <field name="nhan_vien_id"/>
+                <field name="so_tien"/>
+                <field name="cong_vao_luong"/>
+                <field name="trang_thai"/>
+            </tree>
+        </field>
+    </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_tien_thuong_form" model="ir.ui.view">
+        <field name="name">tien_thuong.form</field>
+        <field name="model">tien_thuong</field>
+        <field name="arch" type="xml">
+            <form string="Tiền thưởng">
+                <header>
+                    <button name="action_duyet"
+                            type="object"
+                            string="Duyệt"
+                            class="btn-primary"
+                            attrs="{'invisible':[('trang_thai','!=','nhap')]}"/>
+
+                    <button name="action_da_chi"
+                            type="object"
+                            string="Đã chi"
+                            class="btn-success"
+                            attrs="{'invisible':[('trang_thai','!=','da_duyet')]}"/>
+
+                    <field name="trang_thai"
+                        widget="statusbar"
+                        statusbar_visible="nhap,da_duyet,da_chi"/>
+                </header>
+
+
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="thang"/>
+                            <field name="nam"/>
+                            <field name="kieu_thuong"/>
+                            <field name="nhan_vien_id"
+                                   attrs="{'invisible':[('kieu_thuong','=','tat_ca')],
+                                           'required':[('kieu_thuong','=','mot_nguoi')]}"/>
+                        </group>
+
+                        <group>
+                            <field name="so_tien"/>
+                            <field name="cong_vao_luong"/>
+                            <field name="ly_do"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <field name="ghi_chu"/>
+                    </group>
+                </sheet>
+
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+        <!-- ACTION -->
+        <record id="action_tien_thuong" model="ir.actions.act_window">
+        <field name="name">Tiền thưởng</field>
+        <field name="res_model">tien_thuong</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    </data>
+</odoo>

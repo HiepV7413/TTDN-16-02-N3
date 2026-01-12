@@ -30,6 +30,7 @@
         'views/bang_thue.xml',
         'views/bang_thue_bac.xml',
         "views/phieu_luong.xml",
+        "views/tien_thuong.xml",
         "views/email_template_phieu_luong.xml",
         'views/menu.xml',
     ],

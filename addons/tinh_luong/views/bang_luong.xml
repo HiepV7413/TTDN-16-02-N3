@@ -56,7 +56,9 @@
 </group>
 
                     <group>
-                        <field name="tien_tang_ca" style="color: green;"/> <field name="tien_phat" style="color: red;"/>
+                        <field name="tien_tang_ca" style="color: green;"/> 
+                        <field name="tien_thuong" style="color: green;"/>
+                        <field name="tien_phat" style="color: red;"/>
                         <field name="tong_luong" widget="monetary" style="font-size: 1.2em; font-weight: bold;"/>
                     </group>
                 </group>

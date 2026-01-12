@@ -41,11 +41,16 @@
             action="action_thue_thu_nhap_bac"
             sequence="2"
         />
+        <menuitem id="menu_tien_thuong"
+          name="Quản lí tiền thưởng"
+          parent="menu_root"
+          action="action_tien_thuong"
+          sequence="3"/>
         <menuitem id="menu_phieu_luong"
           name="Phiếu lương"
           parent="menu_root"
           action="action_phieu_luong"
-          sequence="3"/>
+          sequence="4"/>
 
     </data>
 </odoo>

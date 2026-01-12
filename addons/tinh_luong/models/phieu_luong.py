@@ -17,6 +17,43 @@ class PhieuLuong(models.Model):
         compute='_compute_name',
         store=True
     )
+    so_ngay_di_lam = fields.Float(
+        string='Số ngày đi làm',
+        related='bang_luong_id.so_ngay_di_lam',
+        store=True,
+        readonly=True
+    )
+    luong_co_ban = fields.Float(
+        string='Lương cơ bản',
+        related='bang_luong_id.luong_co_ban',
+        store=True,
+        readonly=True
+    )
+    tien_phu_cap = fields.Float(
+        string='Tiền phụ cấp',
+        related='bang_luong_id.phu_cap',
+        store=True,
+        readonly=True
+    )
+    bao_hiem_ca_nhan = fields.Float(
+        string='Tiền bảo hiểm',
+        related='bang_luong_id.bao_hiem_ca_nhan',
+        store=True,
+        readonly=True
+    )
+    bao_hiem_xa_hoi = fields.Float(
+        string='Tiền bảo hiểm xã hội',
+        related='bang_luong_id.bao_hiem_xa_hoi',
+        store=True,
+        readonly=True
+    )
+    tien_thuong = fields.Float(
+        string='Tiền thưởng',
+        related='bang_luong_id.tien_thuong',
+        store=True,
+        readonly=True
+    )
+
 
     nhan_vien_id = fields.Many2one(
         'nhan_vien',
@@ -45,10 +82,11 @@ class PhieuLuong(models.Model):
     # CHI TIẾT TIỀN
     # ======================
     luong_theo_cong = fields.Float(
-    related='bang_luong_id.tong_luong',
-    store=True,
-    readonly=True
-)
+        related='bang_luong_id.tong_luong',
+        store=True,
+        readonly=True
+    )
+
 
     tien_tang_ca = fields.Float(
         related='bang_luong_id.tien_tang_ca',
