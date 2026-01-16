@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_dashboard_cham_cong_graph" model="ir.ui.view">
+            <field name="name">dashboard.cham.cong.graph</field>
+            <field name="model">dashboard_cham_cong</field>
+            <field name="arch" type="xml">
+                <graph string="Số ngày đi làm (12 tháng gần nhất)" type="bar" sample="1">
+                    <field name="thang_sort" type="row"/>
+                    <field name="so_ngay_di_lam" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="view_dashboard_cham_cong_search" model="ir.ui.view">
+            <field name="name">dashboard.cham.cong.search</field>
+            <field name="model">dashboard_cham_cong</field>
+            <field name="arch" type="xml">
+                <search string="Dashboard chấm công">
+                    <field name="nhan_vien_id"/>
+
+                    <filter name="group_by_nhan_vien" 
+                            string="Theo nhân viên"
+                            context="{'group_by': 'nhan_vien_id'}"/>
+
+                    <filter name="last_12_months" 
+                            string="12 tháng gần nhất"
+                            domain="[]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_dashboard_cham_cong" model="ir.actions.act_window">
+            <field name="name">Dashboard chấm công</field>
+            <field name="res_model">dashboard_cham_cong</field>
+            <field name="view_mode">graph</field>
+            <field name="context">{'search_default_last_12_months': 1}</field> 
+            <field name="search_view_id" ref="view_dashboard_cham_cong_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Chưa có dữ liệu thống kê chấm công.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
