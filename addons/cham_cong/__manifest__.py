@@ -28,6 +28,7 @@
         'views/nhan_vien_inherit.xml',
         'views/dang_ky_ca_lam_theo_ngay.xml',
         'views/cham_cong.xml',
+        'views/dashboard_cham_cong.xml',
         'views/dot_dang_ky.xml',
         'views/don_tu.xml',
         'views/menu.xml',

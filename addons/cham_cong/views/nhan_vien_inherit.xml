@@ -1,14 +1,32 @@
 <odoo>
     <record id="view_nhan_vien_form_inherit_cham_cong" model="ir.ui.view">
-        <field name="name">nhan.vien.form.inherit.cham.cong</field>
-        <field name="model">nhan_vien</field>
-        <field name="inherit_id" ref="nhan_su.view_nhan_vien_form"/> 
-        <field name="arch" type="xml">
-            <xpath expr="//notebook" position="inside">
-                <page string="Danh sách chấm công">
-                    <field name="cham_cong_ids"/>
-                </page>
+    <field name="name">nhan.vien.form.inherit.cham.cong</field>
+    <field name="model">nhan_vien</field>
+    <field name="inherit_id" ref="nhan_su.view_nhan_vien_form"/> 
+    <field name="arch" type="xml">
+        <xpath expr="//notebook" position="inside">
+            <page string="Danh sách chấm công">
+                <field name="cham_cong_ids"/>
+            </page>
+        </xpath>
+
+        <xpath expr="//sheet" position="after">
             </xpath>
-        </field>
-    </record>
+        
+        <xpath expr="//sheet/*[1]" position="before">
+            <div class="oe_button_box" name="button_box">
+                <button name="%(action_dashboard_cham_cong)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-bar-chart"
+                        context="{'search_default_nhan_vien_id': active_id}">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Thống kê</span>
+                        <span class="o_stat_text">Chấm công</span>
+                    </div>
+                </button>
+            </div>
+        </xpath>
+    </field>
+</record>
 </odoo>

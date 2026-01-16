@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-odoo}
       PGDATA: /data/postgres
     volumes:
-       - /home/ttdn/ttdn_k15/database_ttdn/cntt15_01_db/_data:/data/postgres
+      - /home/hiep/TTDN-16-02-N3/postgres_data:/data/postgres
     ports:
       - "5431:5432"
     # networks:
