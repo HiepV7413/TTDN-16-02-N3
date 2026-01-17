@@ -24,6 +24,13 @@
             parent="menu_root"
             sequence="2"
         />
+         <!-- MENU -->
+        <menuitem
+            id="menu_dashboard_luong"
+            name="Dashboard lương"
+            parent="menu_root"
+            action="action_dashboard_luong"
+            sequence="5"/>
 
         <!-- MENU CON -->
         <menuitem

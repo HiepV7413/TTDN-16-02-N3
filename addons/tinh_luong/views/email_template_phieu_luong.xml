@@ -111,23 +111,7 @@
                                         <strong style="color: #28a745; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.tien_phu_cap)"/> ₫</strong>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
-                                        <span style="color: #333333; font-size: 14px;">Tiền bảo hiểm</span>
-                                    </td>
-                                    <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
-                                        <strong style="color: #28a745; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.bao_hiem_ca_nhan)"/> ₫</strong>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
-                                        <span style="color: #333333; font-size: 14px;">Tiền bảo hiểm xã hội</span>
-                                    </td>
-                                    <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
-                                        <strong style="color: #28a745; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.bao_hiem_xa_hoi)"/> ₫</strong>
-                                    </td>
-                                </tr>
+                                
 
                                 <t t-if="object.tien_tang_ca">
                                 <tr>  
@@ -150,6 +134,24 @@
                                     </td>
                                 </tr>
                                 </t>
+
+                                <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <span style="color: #333333; font-size: 14px;">Tiền bảo hiểm</span>
+                                    </td>
+                                    <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <strong style="color: #dc3545; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.bao_hiem_ca_nhan)"/> ₫</strong>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <span style="color: #333333; font-size: 14px;">Tiền bảo hiểm xã hội</span>
+                                    </td>
+                                    <td align="right" style="padding: 12px 0; border-bottom: 1px solid #eeeeee;">
+                                        <strong style="color: #dc3545; font-size: 14px;"><t t-esc="'{:,.0f}'.format(object.bao_hiem_xa_hoi)"/> ₫</strong>
+                                    </td>
+                                </tr>
 
                                 <t t-if="object.tien_phat">
                                 <tr>

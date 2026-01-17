@@ -3,6 +3,7 @@ from odoo import models, fields, api
 from dateutil.relativedelta import relativedelta
 from datetime import datetime, time, timedelta,date
 from pytz import timezone, UTC
+from calendar import monthrange
 
 # Trong module tinh_luong/models/bang_luong.py
 
@@ -37,6 +38,19 @@ class BangLuong(models.Model):
         readonly=True
     )
 
+    tien_bh_ca_nhan = fields.Float(
+        string="BH cá nhân",
+        compute="_compute_luong_final",
+        store=True
+    )
+
+    tien_bh_xa_hoi = fields.Float(
+        string="BH xã hội",
+        compute="_compute_luong_final",
+        store=True
+    )
+
+
 
     # --- INPUT TỪ CHẤM CÔNG ---
     so_ngay_di_lam = fields.Float("Số ngày công", compute="_compute_data_cham_cong", store=True)
@@ -46,7 +60,7 @@ class BangLuong(models.Model):
     tong_gio_tang_ca = fields.Float("Tổng giờ tăng ca", compute="_compute_data_cham_cong", store=True)
 
     # --- OUTPUT TÍNH LƯƠNG ---
-    luong_ngay = fields.Float("Lương 1 ngày (Chuẩn)", compute="_compute_luong_final", store=True)
+    luong_ngay = fields.Float("Lương 1 ngày", compute="_compute_luong_final", store=True)
     tien_phat = fields.Float("Tiền phạt", compute="_compute_luong_final", store=True)
     tong_luong = fields.Float("Thực lĩnh", compute="_compute_luong_final", store=True)
     tien_tang_ca = fields.Float("Tiền tăng ca (x2)", compute="_compute_luong_final", store=True)
@@ -178,7 +192,7 @@ class BangLuong(models.Model):
         'thue_id'
     )
     def _compute_luong_final(self):
-        NGAY_CONG_CHUAN = 20
+        NGAY_CONG_CHUAN = 26
         GIO_LAM_NGAY = 8.0
 
         for rec in self:
@@ -192,11 +206,24 @@ class BangLuong(models.Model):
             luong_1_gio = luong_1_ngay / GIO_LAM_NGAY
             luong_1_phut = luong_1_gio / 60
 
+            rec.luong_ngay = luong_1_ngay
+
             # 2. Tăng ca
             rec.tien_tang_ca = rec.tong_gio_tang_ca * luong_1_gio * 2
 
             # 3. Lương theo công
             luong_theo_cong = luong_1_ngay * rec.so_ngay_di_lam
+            
+            # 3.5 . Bảo hiểm
+            rec.tien_bh_ca_nhan = (
+                luong_theo_cong *
+                (rec.nhan_vien_id.bao_hiem_ca_nhan or 0) / 100
+            )
+
+            rec.tien_bh_xa_hoi = (
+                luong_theo_cong *
+                (rec.nhan_vien_id.bao_hiem_xa_hoi or 0) / 100
+            )
 
             # 4. Phạt
             rec.tien_phat = (
@@ -208,11 +235,14 @@ class BangLuong(models.Model):
             thu_nhap_truoc_thue = (
                 luong_theo_cong +
                 rec.tien_tang_ca +
-                rec.tien_thuong -
+                rec.tien_thuong +
+                (rec.phu_cap or 0) -
                 rec.tien_phat -
-                (rec.bao_hiem_ca_nhan or 0) -
-                (rec.bao_hiem_xa_hoi or 0)
+                rec.tien_bh_ca_nhan -
+                rec.tien_bh_xa_hoi
             )
+
+
 
             # 6. Tính thuế
             rec.tien_thue_tncn = 0
@@ -246,3 +276,44 @@ class BangLuong(models.Model):
                 0,
                 thu_nhap_truoc_thue - rec.tien_thue_tncn
             )
+
+    
+    @api.model
+    def cron_tao_bang_luong_thang(self):
+        today = fields.Date.today()
+
+        # ✅ Chỉ chạy vào ngày 1
+        # if today.day != 1:
+        #     return
+
+        # ✅ Lấy tháng trước
+        thang_truoc = today - relativedelta(months=1)
+        thang = thang_truoc.month
+        nam = thang_truoc.year
+
+        nhan_vien_ids = self.env['nhan_vien'].search([
+            ('hop_dong_hien_tai_id', '!=', False),
+            ('hop_dong_hien_tai_id.trang_thai', '=', 'dang_hieu_luc')
+        ])
+
+        for nv in nhan_vien_ids:
+            # ❌ Chống tạo trùng
+            da_ton_tai = self.search_count([
+                ('nhan_vien_id', '=', nv.id),
+                ('thang', '=', thang),
+                ('nam', '=', nam)
+            ])
+            if da_ton_tai:
+                continue
+
+            # 👉 Tạo bản nháp để compute số ngày công
+            bang_luong = self.create({
+                'nhan_vien_id': nv.id,
+                'thang': thang,
+                'nam': nam
+            })
+
+            # ❌ Nếu không có ngày công thì bỏ
+            if bang_luong.so_ngay_di_lam <= 0:
+                bang_luong.unlink()
+

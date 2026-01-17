@@ -28,8 +28,8 @@ class DanhSachHopDong(models.Model):
     ngay_ky = fields.Date("Ngày ký", default=fields.Date.today)
     
     luong_co_ban = fields.Float("Lương cơ bản")
-    bao_hiem_ca_nhan = fields.Float("bao hiem ca nhan")
-    bao_hiem_xa_hoi = fields.Float("bao hiem xa hoi")
+    bao_hiem_ca_nhan = fields.Float("bao hiem ca nhan (%)")
+    bao_hiem_xa_hoi = fields.Float("bao hiem xa hoi (%)")
     phu_cap = fields.Float("Phụ cấp")
     tong_luong = fields.Float("Tổng lương", compute='_compute_tong_luong', store=True)
     
@@ -48,15 +48,23 @@ class DanhSachHopDong(models.Model):
     
     ho_va_ten = fields.Char("Họ và tên", related='nhan_vien_id.ho_va_ten', readonly=True)
     ma_dinh_danh = fields.Char("Mã NV", related='nhan_vien_id.ma_dinh_danh', readonly=True)
+
+    @api.constrains('bao_hiem_ca_nhan', 'bao_hiem_xa_hoi')
+    def _check_bao_hiem_pct(self):
+        for rec in self:
+            if rec.bao_hiem_ca_nhan < 0 or rec.bao_hiem_ca_nhan > 100:
+                raise ValidationError("BH cá nhân phải nằm trong khoảng 0–100%")
+
+            if rec.bao_hiem_xa_hoi < 0 or rec.bao_hiem_xa_hoi > 100:
+                raise ValidationError("BH xã hội phải nằm trong khoảng 0–100%")
+
     
     @api.depends('luong_co_ban', 'phu_cap', 'bao_hiem_ca_nhan', 'bao_hiem_xa_hoi')
     def _compute_tong_luong(self):
         """Tổng lương = Lương CB + Phụ cấp + Bảo hiểm CN + Bảo hiểm XH"""
         for record in self:
             record.tong_luong = (record.luong_co_ban or 0) + \
-                                (record.phu_cap or 0) + \
-                                (record.bao_hiem_ca_nhan or 0) + \
-                                (record.bao_hiem_xa_hoi or 0)
+                                (record.phu_cap or 0)
     
     @api.depends('ngay_bat_dau', 'ngay_ket_thuc')
     def _compute_thoi_han(self):
