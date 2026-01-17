@@ -31,12 +31,12 @@ class NhanVien(models.Model):
         help='Lương được lấy tự động từ hợp đồng đang hiệu lực'
     )
     bao_hiem_ca_nhan = fields.Float(
-        string='Bảo hiểm cá nhân', 
+        string='Bảo hiểm cá nhân (%)', 
         related='hop_dong_hien_tai_id.bao_hiem_ca_nhan', 
         store=True, readonly=True
     )
     bao_hiem_xa_hoi = fields.Float(
-        string='Bảo hiểm xã hội', 
+        string='Bảo hiểm xã hội (%)', 
         related='hop_dong_hien_tai_id.bao_hiem_xa_hoi', 
         store=True, readonly=True
     )

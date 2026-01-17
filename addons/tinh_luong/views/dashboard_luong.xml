@@ -1,0 +1,37 @@
+<odoo>
+
+    <!-- GRAPH VIEW -->
+    <record id="view_dashboard_luong_graph" model="ir.ui.view">
+        <field name="name">dashboard_luong.graph</field>
+        <field name="model">dashboard_luong</field>
+        <field name="arch" type="xml">
+            <graph string="Tổng chi trả lương 12 tháng gần nhất" type="bar">
+                <field name="thang_sort" type="row"/>
+                <field name="tong_chi_tra" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- SEARCH VIEW -->
+    <!-- <record id="view_dashboard_luong_search" model="ir.ui.view">
+        <field name="name">dashboard_luong.search</field>
+        <field name="model">dashboard_luong</field>
+        <field name="arch" type="xml">
+            <search string="Dashboard lương">
+                <filter
+                    name="last_12_months"
+                    string="12 tháng gần nhất"
+                    domain="[]"
+                />
+            </search>
+        </field>
+    </record> -->
+
+
+    <!-- ACTION -->
+    <record id="action_dashboard_luong" model="ir.actions.act_window">
+        <field name="name">Dashboard lương</field>
+        <field name="res_model">dashboard_luong</field>
+        <field name="view_mode">graph</field>
+    </record>
+</odoo>

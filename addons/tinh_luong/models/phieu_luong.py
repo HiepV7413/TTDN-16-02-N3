@@ -37,13 +37,13 @@ class PhieuLuong(models.Model):
     )
     bao_hiem_ca_nhan = fields.Float(
         string='Tiền bảo hiểm',
-        related='bang_luong_id.bao_hiem_ca_nhan',
+        related='bang_luong_id.tien_bh_ca_nhan',
         store=True,
         readonly=True
     )
     bao_hiem_xa_hoi = fields.Float(
         string='Tiền bảo hiểm xã hội',
-        related='bang_luong_id.bao_hiem_xa_hoi',
+        related='bang_luong_id.tien_bh_xa_hoi',
         store=True,
         readonly=True
     )

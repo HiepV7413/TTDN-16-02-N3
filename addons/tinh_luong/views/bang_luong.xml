@@ -51,14 +51,20 @@
                         <field name="luong_ngay"/>
                     </group>
                     <group string="Thuế">
-    <field name="thue_id"/>
-    <field name="tien_thue_tncn" style="color:red;"/>
-</group>
+                        <field name="thue_id"/>
+                        <field name="tien_thue_tncn" style="color:red;"/>
+                    </group>
 
                     <group>
                         <field name="tien_tang_ca" style="color: green;"/> 
                         <field name="tien_thuong" style="color: green;"/>
                         <field name="tien_phat" style="color: red;"/>
+                    </group>
+                    <group string="Bảo hiểm">
+                            <field name="tien_bh_ca_nhan" style="color:red"/>
+                            <field name="tien_bh_xa_hoi" style="color:red"/>
+                    </group>
+                    <group>
                         <field name="tong_luong" widget="monetary" style="font-size: 1.2em; font-weight: bold;"/>
                     </group>
                 </group>
