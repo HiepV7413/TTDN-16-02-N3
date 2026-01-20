@@ -15,7 +15,7 @@
         
         <xpath expr="//sheet/*[1]" position="before">
             <div class="oe_button_box" name="button_box">
-                <button name="%(action_dashboard_cham_cong)d"
+                <button name="%(cham_cong.action_dashboard_cham_cong)d"
                         type="action"
                         class="oe_stat_button"
                         icon="fa-bar-chart"

@@ -277,6 +277,17 @@ class BangLuong(models.Model):
                 thu_nhap_truoc_thue - rec.tien_thue_tncn
             )
 
+    def _get_thue_hieu_luc(self, thang, nam):
+        # Ngày đại diện của kỳ lương (cuối tháng)
+        ngay_tinh_luong = date(nam, thang, monthrange(nam, thang)[1])
+
+        return self.env['thue_thu_nhap'].search([
+            ('ap_dung_tu', '<=', ngay_tinh_luong),
+            '|',
+            ('ap_dung_den', '=', False),
+            ('ap_dung_den', '>=', ngay_tinh_luong),
+        ], order='ap_dung_tu desc', limit=1)
+
     
     @api.model
     def cron_tao_bang_luong_thang(self):
@@ -290,6 +301,8 @@ class BangLuong(models.Model):
         thang_truoc = today - relativedelta(months=1)
         thang = thang_truoc.month
         nam = thang_truoc.year
+
+        thue_ap_dung = self._get_thue_hieu_luc(thang, nam)
 
         nhan_vien_ids = self.env['nhan_vien'].search([
             ('hop_dong_hien_tai_id', '!=', False),
@@ -310,7 +323,8 @@ class BangLuong(models.Model):
             bang_luong = self.create({
                 'nhan_vien_id': nv.id,
                 'thang': thang,
-                'nam': nam
+                'nam': nam,
+                'thue_id': thue_ap_dung.id if thue_ap_dung else False,
             })
 
             # ❌ Nếu không có ngày công thì bỏ
