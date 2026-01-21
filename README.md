@@ -5,7 +5,7 @@
 </h2>
 
 <h2 align="center">
-    ERP Platform – Attendance & Payroll Management
+    ERP Platform – Quản lý Chấm công và Tiền lương
 </h2>
 
 <div align="center">
