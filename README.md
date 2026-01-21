@@ -3,13 +3,15 @@
     🎓 Faculty of Information Technology (DaiNam University)
     </a>
 </h2>
+
 <h2 align="center">
-    PLATFORM ERP
+    ERP Platform – Attendance & Payroll Management
 </h2>
+
 <div align="center">
     <p align="center">
         <img src="docs/logo/aiotlab_logo.png" alt="AIoTLab Logo" width="170"/>
-        <img src="docs/logo/fitdnu_logo.png" alt="AIoTLab Logo" width="180"/>
+        <img src="docs/logo/fitdnu_logo.png" alt="FIT DNU Logo" width="180"/>
         <img src="docs/logo/dnu_logo.png" alt="DaiNam University Logo" width="200"/>
     </p>
 
@@ -20,83 +22,128 @@
 </div>
 
 ## 📖 1. Giới thiệu
-Platform ERP được áp dụng vào học phần Thực tập doanh nghiệp dựa trên mã nguồn mở Odoo. 
+
+Hệ thống **ERP Platform – Quản lý Nhân sự, Chấm công và Tính lương** được xây dựng trong khuôn khổ học phần **Thực tập Doanh nghiệp** của sinh viên Khoa Công nghệ Thông tin – Đại học Đại Nam.
+
+Hệ thống được phát triển dựa trên **nền tảng mã nguồn mở Odoo**, nhằm mô phỏng một hệ thống ERP thực tế trong doanh nghiệp, hỗ trợ các nghiệp vụ:
+
+- Quản lý thông tin nhân sự
+- Chấm công hàng ngày
+- Tính lương theo tháng
+- Quản lý hợp đồng, phòng ban, chức vụ
+
+Thay vì xử lý thủ công hoặc rời rạc bằng Excel, hệ thống cung cấp một giải pháp **tập trung – tự động – dễ mở rộng**, phù hợp với môi trường doanh nghiệp vừa và nhỏ.
 
 ## 🔧 2. Các công nghệ được sử dụng
+
 <div align="center">
 
 ### Hệ điều hành
 [![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/)
+[![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://www.microsoft.com/windows)
+
 ### Công nghệ chính
 [![Odoo](https://img.shields.io/badge/Odoo-714B67?style=for-the-badge&logo=odoo&logoColor=white)](https://www.odoo.com/)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![XML](https://img.shields.io/badge/XML-FF6600?style=for-the-badge&logo=codeforces&logoColor=white)](https://www.w3.org/XML/)
-### Cơ sở dữ liệu
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](#)
+[![XML](https://img.shields.io/badge/XML-FF6600?style=for-the-badge&logo=codeforces&logoColor=white)](#)
+
+### Database & Container
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+
 </div>
 
-## 🚀 3. Các project đã thực hiện dựa trên Platform
+## 🚀 3. Các chức năng chính của hệ thống
 
-Một số project sinh viên đã thực hiện:
-- #### [Khoá 15](./docs/projects/K15/README.md)
-- #### [Khoá 16]() (Coming soon)
-## ⚙️ 4. Cài đặt
+### 👤 Quản lý Nhân sự
+- Thêm, sửa, xoá thông tin nhân viên
+- Quản lý phòng ban, chức vụ
+- Quản lý hợp đồng lao động
 
-### 4.1. Cài đặt công cụ, môi trường và các thư viện cần thiết
+### ⏱️ Quản lý Chấm công
+- Chấm công theo ngày
+- Kiểm tra dữ liệu chấm công
+- Liên kết dữ liệu nhân sự
 
-#### 4.1.1. Tải project.
-```
+### 💰 Quản lý Tính lương
+- Tính lương theo tháng
+- Tự động tổng hợp từ dữ liệu chấm công
+- Quản lý bảng lương nhân viên
+
+## ⚙️ 4. Cài đặt hệ thống
+
+### 4.1. Cài đặt công cụ & môi trường
+
+- **Ubuntu 22.04 (WSL2)**
+- **Python 3.10**
+- **Docker & Docker Compose**
+- **Visual Studio Code**
+
+Cài đặt các thư viện hệ thống cần thiết:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y \
+libxml2-dev libxslt-dev libldap2-dev libsasl2-dev \
+libssl-dev python3.10-dev python3.10-venv \
+build-essential libffi-dev zlib1g-dev libpq-dev
+````
+
+### 4.2. Tải project
+
+```bash
 git clone https://github.com/HiepV7413/TTDN-16-02-N3.git
+cd TTDN-16-02-N3
 ```
-#### 4.1.2. Cài đặt các thư viện cần thiết
-Người sử dụng thực thi các lệnh sau đề cài đặt các thư viện cần thiết
 
-```
-sudo apt-get install libxml2-dev libxslt-dev libldap2-dev libsasl2-dev libssl-dev python3.10-distutils python3.10-dev build-essential libssl-dev libffi-dev zlib1g-dev python3.10-venv libpq-dev
-```
-#### 4.1.3. Khởi tạo môi trường ảo.
-- Khởi tạo môi trường ảo
-```
-python3.10 -m venv ./venv
-```
-- Thay đổi trình thông dịch sang môi trường ảo
-```
+### 4.3. Khởi tạo môi trường ảo Python
+
+```bash
+python3.10 -m venv venv
 source venv/bin/activate
+pip install -r requirements.txt
 ```
-- Chạy requirements.txt để cài đặt tiếp các thư viện được yêu cầu
-```
-pip3 install -r requirements.txt
-```
-### 4.2. Setup database
 
-Khởi tạo database trên docker bằng việc thực thi file dockercompose.yml.
+### 4.4. Setup Database bằng Docker
+
+Chạy PostgreSQL bằng Docker Compose:
+
+```bash
+docker-compose up -d
 ```
-sudo docker-compose up -d
+
+Kiểm tra container:
+
+```bash
+docker ps
 ```
-### 4.3. Setup tham số chạy cho hệ thống
-Tạo tệp **odoo.conf** có nội dung như sau:
-```
+
+### 4.5. Cấu hình hệ thống Odoo
+
+Tạo file `odoo.conf` (hoặc kế thừa từ `odoo.conf.template`):
+
+```ini
 [options]
 addons_path = addons
 db_host = localhost
-db_password = odoo
 db_user = odoo
+db_password = odoo
 db_port = 5431
 xmlrpc_port = 8069
 ```
-Có thể kế thừa từ file **odoo.conf.template**
-### 4.4. Chạy hệ thống và cài đặt các ứng dụng cần thiết
-Lệnh chạy
-```
+
+### 4.6. Chạy hệ thống
+
+```bash
 python3 odoo-bin.py -c odoo.conf -u all
 ```
-Người sử dụng truy cập theo đường dẫn _http://localhost:8069/_ để đăng nhập vào hệ thống.
 
-## 📝 5. License
+Truy cập hệ thống tại:
+👉 [http://localhost:8069](http://localhost:8069)
 
-© 2024 AIoTLab, Faculty of Information Technology, DaiNam University. All rights reserved.
+## 🔐 5. Đăng nhập lần đầu
 
----
-
-    
+* Khi truy cập lần đầu, tạo **database mới**
+* Tạo tài khoản **Administrator**
+* Cài đặt các module cần thiết của hệ thống
