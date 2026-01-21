@@ -54,12 +54,9 @@ Thay vì xử lý thủ công hoặc rời rạc bằng Excel, hệ thống cung
 
 </div>
 
-## 🚀 3. Các chức năng chính của hệ thống
+## 🚀 3. Hình ảnh các chức năng của hệ thống
 
 ### 👤 Quản lý Nhân sự
-- Thêm, sửa, xoá thông tin nhân viên
-- Quản lý phòng ban, chức vụ
-- Quản lý hợp đồng lao động
 
 #### Trang quản lý nhân viên
 <img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
@@ -83,9 +80,6 @@ Thay vì xử lý thủ công hoặc rời rạc bằng Excel, hệ thống cung
 <img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
 
 ### ⏱️ Quản lý Chấm công
-- Chấm công theo ngày
-- Kiểm tra dữ liệu chấm công
-- Liên kết dữ liệu nhân sự
 
 #### Trang quản lý chấm công
 <img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
@@ -97,9 +91,6 @@ Thay vì xử lý thủ công hoặc rời rạc bằng Excel, hệ thống cung
 <img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
 
 ### 💰 Quản lý Tính lương
-- Tính lương theo tháng
-- Tự động tổng hợp từ dữ liệu chấm công
-- Quản lý bảng lương nhân viên
 
 #### Trang quản lý bảng lương
 <img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
@@ -112,6 +103,8 @@ Thay vì xử lý thủ công hoặc rời rạc bằng Excel, hệ thống cung
 #### Trang quản lý phiếu lương
 <img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
 #### Dashboard lương
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Gửi email khi có phiếu lương
 <img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
 
 ## ⚙️ 4. Cài đặt hệ thống
