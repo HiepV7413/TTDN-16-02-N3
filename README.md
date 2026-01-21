@@ -202,3 +202,7 @@ Truy cập hệ thống tại:
 * Khi truy cập lần đầu, tạo **database mới**
 * Tạo tài khoản **Administrator**
 * Cài đặt các module cần thiết của hệ thống
+
+## 📝 6. Nguồn tham khảo
+
+- Module chấm công (Khóa 15): https://github.com/dinhtuananh188/TTDN-15-01-N5.git
