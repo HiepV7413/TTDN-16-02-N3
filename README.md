@@ -61,15 +61,58 @@ Thay vì xử lý thủ công hoặc rời rạc bằng Excel, hệ thống cung
 - Quản lý phòng ban, chức vụ
 - Quản lý hợp đồng lao động
 
+#### Trang quản lý nhân viên
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Dashboard chấm công
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý đơn vị
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý chức vụ
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang danh mục chứng chỉ, bằng cấp
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang lịch sử công tác
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang danh sách chứng chỉ, bằng cấp
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý loại hợp đồng
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý hợp đồng lao 
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý người phụ thuộc
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+
 ### ⏱️ Quản lý Chấm công
 - Chấm công theo ngày
 - Kiểm tra dữ liệu chấm công
 - Liên kết dữ liệu nhân sự
 
+#### Trang quản lý chấm công
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý đăng ký ca làm theo ngày
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý đợt đăng ký
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý đơn từ
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+
 ### 💰 Quản lý Tính lương
 - Tính lương theo tháng
 - Tự động tổng hợp từ dữ liệu chấm công
 - Quản lý bảng lương nhân viên
+
+#### Trang quản lý bảng lương
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý bậc thuế TNCN
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý cấu hình thuế TNCN
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý tiền thưởng
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Trang quản lý phiếu lương
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
+#### Dashboard lương
+<img width="1902" height="931" alt="image" src="https://github.com/user-attachments/assets/c982cf12-24f8-4137-8ad4-d6c8768c5e54" />
 
 ## ⚙️ 4. Cài đặt hệ thống
 
