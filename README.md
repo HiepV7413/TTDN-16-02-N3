@@ -82,7 +82,7 @@ Thay vì xử lý thủ công hoặc rời rạc bằng Excel, hệ thống cung
 #### Trang quản lý loại hợp đồng
 <img width="1902" height="931" alt="image" src="/assets/assets_nhan_su/loai_hop_dong.png" />
 
-#### Trang quản lý hợp đồng lao 
+#### Trang quản lý hợp đồng lao động
 <img width="1902" height="931" alt="image" src="/assets/assets_nhan_su/hop_dong_lao_dong.png" />
 
 #### Trang quản lý người phụ thuộc
