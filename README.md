@@ -206,7 +206,7 @@ Truy cập hệ thống tại:
 ## 📰 6. POSTER 🖼️
 
 <p align="center">
-  <img src="/assets/" alt="Poster dự án" width="800"/>
+  <img src="/assets/Poster-TTDN-NHOM03.pdf" alt="Poster dự án" width="800"/>
 </p>
 
 ## 📝 7. Nguồn tham khảo
