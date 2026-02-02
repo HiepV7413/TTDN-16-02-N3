@@ -203,6 +203,12 @@ Truy cập hệ thống tại:
 * Tạo tài khoản **Administrator**
 * Cài đặt các module cần thiết của hệ thống
 
-## 📝 6. Nguồn tham khảo
+## 📰 6. POSTER 🖼️
+
+<p align="center">
+  <img src="/assets/" alt="Poster dự án" width="800"/>
+</p>
+
+## 📝 7. Nguồn tham khảo
 
 - Module chấm công (Khóa 15): https://github.com/dinhtuananh188/TTDN-15-01-N5.git
