@@ -293,7 +293,6 @@ class BangLuong(models.Model):
     def cron_tao_bang_luong_thang(self):
         today = fields.Date.today()
 
-        # ✅ Chỉ chạy vào ngày 1
         # if today.day != 1:
         #     return
 
