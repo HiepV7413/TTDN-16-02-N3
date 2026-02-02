@@ -33,12 +33,12 @@
             sequence="4"
             action="action_don_tu"
         />
-        <!-- <menuitem name="Dashboard chấm công" 
+        <menuitem name="Dashboard chấm công" 
             id="menu_dashboard_cham_cong" 
             parent="menu_root" 
             sequence="5"
             action="action_dashboard_cham_cong"
-        /> -->
+        />
 
     </data>
 </odoo>
